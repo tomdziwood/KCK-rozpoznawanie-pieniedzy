@@ -4,6 +4,7 @@ import skimage.morphology as mp
 from skimage.color import rgb2gray, gray2rgb
 from matplotlib import pyplot as plt
 import numpy as np
+import os
 
 
 def plot_hist(img):
@@ -82,11 +83,26 @@ def wykrywanie50gr(image):
     return image
 
 def wykrywanie1zl(image):
-    img = np.copy(image)
+    return image
 
+def wykrywanie2zl(image):
+    return image
+
+def wykrywanie5zl(image):
+    return image
+
+def wykrywanie10zl(image):
+    return image
+
+def wykrywanie20zl(image):
+    return image
+
+def wykrywanieMonet(image):
+    img = np.copy(image)
+    """
     print("\t\tTrwa progowanie...")
     img = progowanie(img)
-
+    """
     print("\t\tTrwa konwolucja...")
     img = konwolucja(img)
 
@@ -104,24 +120,13 @@ def wykrywanie1zl(image):
     """
     return img
 
-def wykrywanie2zl(image):
-    return image
-
-def wykrywanie5zl(image):
-    return image
-
-def wykrywanie10zl(image):
-    return image
-
-def wykrywanie20zl(image):
-    return image
-
 
 
 def main():
-    tytul = ['1.jpg', '2.jpg', '3.jpg',
-               '4.jpg', '5.jpg', '6.jpg',
-               '7.jpg', '8.jpg']
+    sciezkaZrodlowa = "zdjecia/1280 x 960/"
+    sciezkaDocelowa = "wyniki/1280 x 960/"
+
+    tytul = os.listdir(sciezkaZrodlowa)
 
     """
     for i in range(5):
@@ -130,13 +135,14 @@ def main():
     """
 
 
-    for i in range(8):
+    #for i in range(len(tytul)):
+    for i in [45]:
         print('Trwa przetwarzanie obrazu o indeksie i =', i)
-        oryginal = io.imread('zdjecia/' + tytul[i])
+        oryginal = io.imread(sciezkaZrodlowa + tytul[i])
 
 
-        print("\tTrwa wyszukiwanie 1zl...")
-        image = wykrywanie1zl(oryginal)
+        print("\tTrwa wykrywanie monet...")
+        image = wykrywanieMonet(oryginal)
 
 
         print("\t\nTrwa rysowanie wykresow...")
@@ -146,11 +152,12 @@ def main():
         ax[1].imshow(image, aspect='equal', interpolation='bilinear')
 
         print("\tTrwa zapisywanie do pliku jpg...")
-        fig.savefig("wyniki/" + tytul[i], dpi=160)
+        fig.savefig(sciezkaDocelowa + tytul[i], dpi=160)
         print("\tPomyslnie zapisano do pliku jpg.")
         print("\tPrzygotowywanie wyswietlenia obrazow w panelu bocznym...")
         plt.show()
         print("\tPomyslnie wyswietlono.\n\n")
+
 
 
 main()
