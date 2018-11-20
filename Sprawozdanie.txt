@@ -1,0 +1,8 @@
+przedstawiæ krótki wstêp, 
+"Tematem naszego projektu jest...":
+
+
+dalej:
+objaœniæ jak nasz program pokolei przetwarza³ dane obrazki krok po kroku
+pokazaæ ajk dzia³a³ dany element na danych przyk³adach, gdzie tu pasowa³o, tam pokazaæ dla tych parametrów nie wysz³o, pokazaæ przyk³ady
+
