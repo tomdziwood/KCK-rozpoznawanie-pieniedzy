@@ -21,15 +21,11 @@ def progowanie(image):
 
 
 def main():
-    sciezkaZrodlowa = "zdjecia/1280 x 960/"
-    sciezkaDocelowa = "Rozpoznanie nominału monet/1280 x 960/"
-    sciezkaWzorcow = "wzorce/"
-    nominaly = ["5gr", "50gr", "1zl", "2zl", "5zl", "10zl", "20zl"]
+    sciezkaZrodlowa = "wzorce/zdjecia wzorcowe/2/"
 
     tytul = os.listdir(sciezkaZrodlowa)
 
-    sciezkaZapisuWzorca = "wzorce/Znalezione/"
-    licznikZnalezionychWzorcow = 0
+    sciezkaZapisuWzorca = "wzorce/znalezione/"
 
 
     for i in range(len(tytul)):
@@ -49,6 +45,7 @@ def main():
 
         print("\tTrwa identyfikacja konturów okręgów...")
         konturyOkregow = []
+        licznikZnalezionychWzorcow = 1
         for contour in contours:
             x = contour[:, 0, 0]
             y = contour[:, 0, 1]
@@ -78,7 +75,7 @@ def main():
 
                     #wycinek = np.copy(oryginal[ymin : ymax, xmin : xmax])
                     wycinek = np.copy(oryginal[int(ymean - odlegloscOdSrodkaMean) : int(ymean + odlegloscOdSrodkaMean), int(xmean - odlegloscOdSrodkaMean) : int(xmean + odlegloscOdSrodkaMean)])
-                    cv2.imwrite("wzorce/Znalezione/" + str(licznikZnalezionychWzorcow) + ".jpg", wycinek)
+                    cv2.imwrite(sciezkaZapisuWzorca + tytul[i][:-4] + "_" + str(licznikZnalezionychWzorcow) + ".jpg", wycinek)
                     licznikZnalezionychWzorcow  += 1
 
         print("\tIdentyfikacja konturów okręgów zakończona.")

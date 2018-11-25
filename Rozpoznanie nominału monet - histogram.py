@@ -62,8 +62,7 @@ def main():
 
 
     for i in range(len(tytul)):
-    #for i in [0, 20, 30, 40, 50, 60, 70]:
-    #for i in [13]:
+    #for i in [5]:
         print("Trwa przetwarzanie obrazu o indeksie i = " + str(i) + "/" + str(len(tytul)) + " (" + tytul[i])
         oryginal = cv2.imread(sciezkaZrodlowa + tytul[i], cv2.IMREAD_COLOR)
         minimalnyPromien = int(min(oryginal.shape[:2])/20)
@@ -134,7 +133,8 @@ def main():
 
                     wynikiStatystyk.sort(key=lambda x: x[0])
                     cv2.putText(wynikImage, wynikiStatystyk[0][1], (int(xmean), int(ymean)), cv2.FONT_HERSHEY_SIMPLEX, 2, (255, 255, 255), 3, cv2.LINE_AA)
-                    #for wynikStatystyk in wynikiStatystyk:
+
+                    #for wynikStatystyk in wynikiStatystyk[:50]:
                     #    print(wynikStatystyk)
 
                     """
@@ -167,13 +167,11 @@ def main():
         ax[2].set_title("Ilosc konturów: " + str(len(konturyOkregow)))
         ax[2].imshow(cv2.cvtColor(imageKonturyOkregow, cv2.COLOR_BGR2RGB), aspect='equal', interpolation='bilinear')
 
-
         """
         print("\tPrzygotowywanie wyswietlenia obrazow w panelu bocznym...")
         plt.show()
         print("\tPomyslnie wyswietlono.\n\n")
         """
-
 
         print("\tTrwa zapisywanie do pliku jpg...")
         fig.savefig(sciezkaDocelowa + tytul[i])
