@@ -5,72 +5,51 @@ import os
 
 
 
-def wykrywanieKonturow(image):
-    print("\tTrwa wykrywanie konturow...")
-
+def progowanie(image):
     gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
-    """
-    fig, ax = plt.subplots()
-    ax.imshow(gray, cmap='gray')
-    plt.show()
-    """
 
     blurred = cv2.GaussianBlur(gray, (11, 11), 0)
-    """
-    fig, ax = plt.subplots()
-    ax.imshow(blurred, cmap='gray')
-    plt.show()
-    """
-
 
     thresh = cv2.adaptiveThreshold(blurred, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 31, 10)
-
-
-    print("\tKoniec wykrywania konturow.")
+	
     return thresh
 
 
 
 def main():
-    sciezkaZrodlowa = "zdjecia/1280 x 960/"
-    sciezkaDocelowa = "okregi/1280 x 960/"
+    sciezkaZrodlowa = "zdjecia/monety - latwe/"
 
     tytul = os.listdir(sciezkaZrodlowa)
 
 
     #for i in range(len(tytul)):
     #for i in [0, 10, 20, 30, 40, 50, 60]:
-    for i in [0]:
-        print('Trwa przetwarzanie obrazu o indeksie i =', i, " (" + tytul[i])
-        oryginal = cv2.imread(sciezkaZrodlowa + tytul[i], cv2.IMREAD_COLOR)
+    for iTytul in [22]:
+        print("\n\nTrwa przetwarzanie obrazu o indeksie i = " + str(iTytul) + "/" + str(len(tytul)) + " (" + tytul[iTytul] + ")")
+        oryginal = cv2.imread(sciezkaZrodlowa + tytul[iTytul], cv2.IMREAD_COLOR)
 
 
-        print("\tTrwa wykrywanie monet...")
-        image = wykrywanieKonturow(oryginal)
-        """
-        print("type(images) = " + str(type(images)))
-        print("len(images) = " + str(len(images)))
-        print("type(tytulyWykresow) = " + str(type(tytulyWykresow)))
-        print("len(tytulyWykresow) = " + str(len(tytulyWykresow)))
-        """
+        print("\tTrwa progowanie obrazu...")
+        image = progowanie(oryginal)
 
-        print("\t\nTrwa rysowanie wykresow...")
+
+        print("\tTrwa rysowanie wykresów...")
         fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(12, 4.5), subplot_kw={'xticks': [], 'yticks': []})
         fig.subplots_adjust(left=0, right=1, bottom=0, top=1, hspace=0.1, wspace=0.1)
         ax[0].imshow(cv2.cvtColor(oryginal, cv2.COLOR_BGR2RGB), aspect='equal', interpolation='bilinear')
         ax[1].imshow(image, cmap='gray', aspect='equal', interpolation='bilinear')
-        print("\tPrzygotowywanie wyswietlenia obrazow w panelu bocznym...")
+
+        print("\tPrzygotowywanie wyświetlenia obrazów w panelu bocznym...")
         plt.show()
-        print("\tPomyslnie wyswietlono.\n\n")
 
 
-        print("\tTrwa wykonywanie cv2.HoughCircles()...")
+        print("\n\tTrwa wykonywanie cv2.HoughCircles()...")
         minimalnyPromien = int(min(image.shape)/20)
         maksymalnyPromien = int(min(image.shape)/3)
         minimalnyDystans = int(1.5 * minimalnyPromien)
         parametr2 = 40
         while(parametr2 > 0):
-            print("Trwa proba parametr2 = " + str(parametr2) + "...")
+            print("Trwa próba parametr2 = " + str(parametr2) + "...")
             circles = cv2.HoughCircles(image, cv2.HOUGH_GRADIENT, 1, minDist=minimalnyDystans, param1=50, param2=parametr2, minRadius=minimalnyPromien, maxRadius=maksymalnyPromien)
             if(not(circles is None) and (len(circles[0]) >= 10)):
                 print("funkcja cv2.HoughCircles() zatrzymana dla parametr2 = " + str(parametr2))
@@ -84,35 +63,35 @@ def main():
         for j in circles[0, :]:
             # rysowanie okregu
             cv2.circle(wynik, (j[0], j[1]), j[2], (0, 255, 0), 2)
-            # draw srodka okregu
+            # rysowanie srodka okregu
             cv2.circle(wynik, (j[0], j[1]), 2, (0, 0, 255), 3)
 
             ktoryOkrag = np.copy(oryginal)
             # rysowanie okregu
             cv2.circle(ktoryOkrag, (j[0], j[1]), j[2], (0, 255, 0), 2)
-            # draw srodka okregu
+            # rysowanie srodka okregu
             cv2.circle(ktoryOkrag, (j[0], j[1]), 2, (0, 0, 255), 3)
 
 
             wycinek = np.copy(oryginal[j[1] - j[2] : j[1] + j[2], j[0] - j[2] : j[0] + j[2]])
 
-            print("\tTrwa rysowanie wykresow...")
+            print("\tTrwa rysowanie wykresów...")
             fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(12, 4.5), subplot_kw={'xticks': [], 'yticks': []})
             fig.subplots_adjust(left=0, right=1, bottom=0, top=1, hspace=0.1, wspace=0.1)
             ax[0].imshow(cv2.cvtColor(ktoryOkrag, cv2.COLOR_BGR2RGB), aspect='equal', interpolation='bilinear')
             ax[1].imshow(cv2.cvtColor(wycinek, cv2.COLOR_BGR2RGB), cmap='gray', aspect='equal', interpolation='bilinear')
-            print("\tPrzygotowywanie wyswietlenia obrazow w panelu bocznym...")
-            plt.show()
-            print("\tPomyslnie wyswietlono.\n\n")
 
+            print("\tPrzygotowywanie wyświetlenia obrazów w panelu bocznym...")
+            plt.show()
+
+
+            print("\tTrwa porównywanie obrazu ze wzorcem...")
             wzorzec = cv2.imread("wzorce/5zl/1.jpg", cv2.IMREAD_COLOR)
             orb = cv2.ORB_create()
             kp1, des1 = orb.detectAndCompute(wzorzec, None)
             kp2, des2 = orb.detectAndCompute(wycinek, None)
             bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
             matches = bf.match(des1, des2)
-            print("type(matches) = " + str(type(matches)))
-            print("len(matches) = " + str(len(matches)))
             matches = sorted(matches, key = lambda x:x.distance)
             zestawienie = cv2.drawMatches(wzorzec, kp1, wycinek, kp2, matches[:10], None, flags=2)
             plt.imshow(cv2.cvtColor(zestawienie, cv2.COLOR_BGR2RGB))
@@ -120,14 +99,14 @@ def main():
 
 
 
-        print("\tTrwa rysowanie wykresow...")
+        print("\tTrwa rysowanie wykresów...")
         fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(12, 4.5), subplot_kw={'xticks': [], 'yticks': []})
         fig.subplots_adjust(left=0, right=1, bottom=0, top=1, hspace=0.1, wspace=0.1)
         ax[0].imshow(cv2.cvtColor(oryginal, cv2.COLOR_BGR2RGB), aspect='equal', interpolation='bilinear')
         ax[1].imshow(cv2.cvtColor(wynik, cv2.COLOR_BGR2RGB), cmap='gray', aspect='equal', interpolation='bilinear')
-        print("\tPrzygotowywanie wyswietlenia obrazow w panelu bocznym...")
+
+        print("\tPrzygotowywanie wyświetlenia obrazów w panelu bocznym...")
         plt.show()
-        print("\tPomyslnie wyswietlono.\n\n")
 
 
         """

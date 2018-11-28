@@ -52,7 +52,7 @@ def main():
         print("type(tytulyWykresow) = " + str(type(tytulyWykresow)))
         print("len(tytulyWykresow) = " + str(len(tytulyWykresow)))
         """
-        """
+
         print("\t\nTrwa rysowanie wykresow...")
         fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(12, 4.5), subplot_kw={'xticks': [], 'yticks': []})
         fig.subplots_adjust(left=0, right=1, bottom=0, top=1, hspace=0.1, wspace=0.1)
@@ -61,7 +61,6 @@ def main():
         print("\tPrzygotowywanie wyswietlenia obrazow w panelu bocznym...")
         plt.show()
         print("\tPomyslnie wyswietlono.\n\n")
-        """
 
 
         print("\tTrwa wykonywanie cv2.HoughCircles()...")
@@ -97,9 +96,11 @@ def main():
         print("\tPomyslnie wyswietlono.\n\n")
 
 
+        """
         print("\tTrwa zapisywanie do pliku jpg...")
         fig.savefig(sciezkaDocelowa + tytul[i])
         print("\tPomyslnie zapisano do pliku jpg.\n\n")
+        """
 
 
 

@@ -51,7 +51,7 @@ def plot_hist_okrag(img):
 
 
 def przypadek01(sciezkaZrodlowa, tytul):
-    image = io.imread(sciezkaZrodlowa + tytul[45])
+    image = io.imread(sciezkaZrodlowa + tytul[0])
 
     print("\t\nTrwa rysowanie obrazu...")
     fig, ax = plt.subplots(figsize=(8, 6))
@@ -83,16 +83,7 @@ def przypadek01(sciezkaZrodlowa, tytul):
 
 
 def przypadek02(sciezkaZrodlowa, tytul):
-    image = io.imread(sciezkaZrodlowa + tytul[45])
-
-    """
-    print("\t\nTrwa rysowanie obrazu...")
-    fig, ax = plt.subplots(figsize=(8, 6))
-    ax.imshow(image, aspect='equal', interpolation='bilinear')
-    plt.show()
-    print("Rysowanie histogramu obrazu...\n")
-    plot_hist_caly(image)
-    """
+    image = io.imread(sciezkaZrodlowa + tytul[0])
 
     print("Trwa szykowanie wycinka...")
     wycinek = image[280:550, 240:510]
@@ -117,16 +108,7 @@ def przypadek02(sciezkaZrodlowa, tytul):
 
 
 def przypadek03(sciezkaZrodlowa, tytul):
-    image = io.imread(sciezkaZrodlowa + tytul[45])
-
-    """
-    print("\t\nTrwa rysowanie obrazu...")
-    fig, ax = plt.subplots(figsize=(8, 6))
-    ax.imshow(image, aspect='equal', interpolation='bilinear')
-    plt.show()
-    print("Rysowanie histogramu obrazu...\n")
-    plot_hist_caly(image)
-    """
+    image = io.imread(sciezkaZrodlowa + tytul[0])
 
     print("Trwa szykowanie wycinka...")
     wycinek = image[565:835, 467:737]
@@ -153,7 +135,7 @@ def przypadek03(sciezkaZrodlowa, tytul):
 def main():
     print("Poczatek testowania 1zl.")
 
-    sciezkaZrodlowa = "zdjecia/1280 x 960/"
+    sciezkaZrodlowa = "zdjecia/monety - latwe/"
     tytul = os.listdir(sciezkaZrodlowa)
 
     przypadek01(sciezkaZrodlowa, tytul)
